@@ -1,8 +1,8 @@
 public class Game {
 
     //global variables
-    private char[][] field = new char[10][10];
-    private char[][] testField = {{'w', 's', 's', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
+    private final char[][] field = new char[10][10];
+    private final char[][] testField = {{'w', 's', 's', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 's', 's', 's', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
@@ -12,13 +12,15 @@ public class Game {
             {'w', 'w', 's', 's', 'w', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 'w', 'w', 'w', 's', 's', 's', 's', 'w',}};
-    private int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
+    private final int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
+
     public Game() {
-        checkPlacement(9, 0, false, 'd', testField);
-        printField(testField);
+        setFieldAllWater(field);
+        placeShip(5,5,false,'d', field);
+        printField(field);
     }
 
-    public void setFieldAllWater(char field[][]) {
+    public void setFieldAllWater(char[][] field) {
         for(int i = 0; i < field.length; i++) {
             for(int j = 0; j < field[0].length; j++) {
                 field[j][i] = 'w';
@@ -26,7 +28,7 @@ public class Game {
         }
     }
 
-    public void printField(char field[][]) {
+    public void printField(char[][] field) {
         System.out.println("debug: current field");
         for(int i = 0; i < field.length; i++) {
             for(int j = 0; j < field[0].length; j++) {
@@ -37,41 +39,57 @@ public class Game {
     }
 
     //check if entered ship placement is valid and does not confront with other ships
-    public int checkPlacement(int x, int y, boolean rotation, char type, char[][] field) {
+    private int checkPlacement(int x, int y, boolean rotation, char type, char[][] field) {
         //convert ship type to length
         int lengthOfShip = getLengthFromType(type);
 
         //set start and end coords and checks if ship would be out of bounds
         int startPosX = x - 1; int startPosY = y - 1;
         int endPosX = 0; int endPosY = 0;
-        if(rotation == true) {
+        if(rotation) {
             endPosX = startPosX + lengthOfShip + 1;
             endPosY = startPosY + 2;
-            if((x + lengthOfShip > 10)) {System.out.println("error: invalid ship placement"); return -1;}
+            if((startPosX + lengthOfShip > 9)) {System.out.println("error: invalid ship placement"); return -1;}
         }
         else{
             endPosY = startPosY + lengthOfShip + 1;
             endPosX = startPosX + 2;
-            if((y + lengthOfShip > 10)) {System.out.println("error: invalid ship placement"); return -1;}
+            if((startPosY + lengthOfShip > 9)) {System.out.println("error: invalid ship placement"); return -1;}
         }
         if(endPosX > 9) {endPosX = 9;}
         if(endPosY > 9) {endPosY = 9;}
         if(startPosX < 0) {startPosX = 0;}
         if(startPosY < 0) {startPosY = 0;}
-        System.out.println("debug: checking from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")"); //for checking the start and end coords of the area that is checked
+        System.out.println("debug: checking from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
 
         for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
             for (int currentPosX = startPosX; currentPosX <= endPosX; currentPosX ++) {
-                //field[currentPosY][currentPosX] = '*';
                 if(field[currentPosY][currentPosX] != 'w') {
                     System.out.println("error: invalid ship placement");
-                    //return -1 if placement is invalid
                     return -1;
                 }
             }
         }
-        //return 0 if valid
-        return 0;
+        return 1;
+    }
+
+    //place ship
+    public void placeShip(int x, int y, boolean rotation, char type, char[][] field){
+        int startPosX; int startPosY; int endPosX; int endPosY;
+        if(checkPlacement(x, y, rotation, type, field) == -1) {
+            System.out.println("info: no ship was placed");
+        }
+        else {
+            if(rotation == true) {startPosX = x; startPosY = y; endPosX = startPosX + getLengthFromType(type) - 1; endPosY = y;}
+            else {startPosX = x; startPosY = y; endPosX = x; endPosY = startPosY + getLengthFromType(type) - 1;}
+            System.out.println("debug: placing from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
+
+            for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
+                for (int currentPosX = startPosX; currentPosX <= endPosX; currentPosX ++) {
+                    field[currentPosY][currentPosX] = 's';
+                }
+            }
+        }
     }
 
     private int getLengthFromType(char type) {
