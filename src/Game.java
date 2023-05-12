@@ -103,6 +103,21 @@ public class Game {
         System.out.println("error: could not get length of ship from type");
         return -1;
     }
+    
+    public void attackShip(char field[][]){
+        for(int i = 0; i < field.length; i++) {
+            for(int j = 0; j < field[0].length; j++) {
+                char[][] shot = new char[i][j];
+                if(shot[i][j] == 's' || shot[i][j] == 'h'){
+                    field[i][j] = 'h'; // h = hit
+                }
+                else if(shot[i][j] == 'w' || shot[i][j] == 'm'){
+                    field[i][j] = 'm'; // m = miss
+                }
+                
+            }
+        }
+    }
     public static void main(String[] args) {
         Game game1 = new Game();
     }
