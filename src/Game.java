@@ -16,7 +16,7 @@ public class Game {
 
     public Game() {
         setFieldAllWater(field);
-        placeShip(5,5,false,'d', field);
+        placeShip(5,6,false,'d', field);
         printField(field);
     }
 
