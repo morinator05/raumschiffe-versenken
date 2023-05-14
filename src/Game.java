@@ -93,7 +93,6 @@ public class Game {
     }
 
     private int getLengthFromType(char type) {
-        int lengthOfShip = 0;
         switch (type) {
             case 'a': return lengthOfShipList[0];
             case 'b': return lengthOfShipList[1];
