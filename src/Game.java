@@ -1,8 +1,15 @@
 public class Game {
 
-    //global variables
-    private final char[][] field = new char[10][10];
-    private final char[][] testField = {{'w', 's', 's', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
+    //associations
+    Player player;
+    ComputerEnemy computerplayer;
+    Gui gui = new Gui();
+
+    //variables
+    private int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
+    private char[][] field = new char[10][10];
+    private char[][] testField = {
+            {'w', 's', 's', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 's', 's', 's', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
@@ -12,20 +19,33 @@ public class Game {
             {'w', 'w', 's', 's', 'w', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
             {'w', 'w', 'w', 'w', 'w', 's', 's', 's', 's', 'w',}};
-    private final int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
-
+    
     public Game() {
-        setFieldAllWater(field);
-        placeShip(5,5,false,'d', field);
-        printField(field);
+        gui = new Gui();
+        player = new Player("null");
+        computerplayer = new  ComputerEnemy();
     }
 
-    public void setFieldAllWater(char[][] field) {
-        for(int i = 0; i < field.length; i++) {
-            for(int j = 0; j < field[0].length; j++) {
-                field[j][i] = 'w';
+    //plays one round and returns the winner
+    public int playRound() {
+        boolean gameOver = false;
+        boolean turn = true; //true=player false=computer
+        
+        while(player.shipsRemaining() != 0) {
+            placeShip(1,1,false,'a', player.getOwnField());
+            printField(player.getOwnField());
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
+
+
+        while(gameOver == true) {
+
+        }
+        return 0;
     }
 
     public void printField(char[][] field) {
@@ -118,6 +138,10 @@ public class Game {
         }
     }
     public static void main(String[] args) {
+
         Game game1 = new Game();
+
+        game1.playRound();
+
     }
 }
