@@ -11,14 +11,12 @@ This is a little minigame for a school-project
 
 ## Roadmap
 
-- get the games basic funktionality
+- get the games basic functionality
 
 - develop computer enemy
 
 - add GUI
 
-- develop more features
 
-- add multiplayer
 
 
