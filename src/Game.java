@@ -6,19 +6,7 @@ public class Game {
     Gui gui = new Gui();
 
     //variables
-    private int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
-    private char[][] field = new char[10][10];
-    private char[][] testField = {
-            {'w', 's', 's', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 'w', 's', 's', 's', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 's', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 's', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 'w', 's', 's', 'w', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',},
-            {'w', 'w', 'w', 'w', 'w', 's', 's', 's', 's', 'w',}};
+    
     
     public Game() {
         gui = new Gui();
@@ -29,10 +17,9 @@ public class Game {
     //plays one round and returns the winner
     public int playRound() {
         boolean gameOver = false;
-        boolean turn = true; //true=player false=computer
         
         while(player.shipsRemaining() != 0) {
-            placeShip(1,1,false,'a', player.getOwnField());
+            placeShip(1,1,false,0, player.getOwnField());
             printField(player.getOwnField());
             try {
                 Thread.sleep(10000);
@@ -58,14 +45,14 @@ public class Game {
         }
     }
 
-    //check if entered ship placement is valid and does not confront with other ships
-    private int checkPlacement(int x, int y, boolean rotation, char type, char[][] field) {
+    //check if entered ship placement is valid and does not touch a other ship 
+    private int checkPlacement(int x, int y, boolean rotation, int type, char[][] field) {
         //convert ship type to length
         int lengthOfShip = getLengthFromType(type);
 
         //set start and end coords and checks if ship would be out of bounds
         int startPosX = x - 1; int startPosY = y - 1;
-        int endPosX = 0; int endPosY = 0;
+        int endPosX; int endPosY;
         if(rotation) {
             endPosX = startPosX + lengthOfShip + 1;
             endPosY = startPosY + 2;
@@ -82,6 +69,7 @@ public class Game {
         if(startPosY < 0) {startPosY = 0;}
         System.out.println("debug: checking from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
 
+        //check from startPosXY to endPosXY if ship would touch other ship 
         for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
             for (int currentPosX = startPosX; currentPosX <= endPosX; currentPosX ++) {
                 if(field[currentPosY][currentPosX] != 'w') {
@@ -90,12 +78,13 @@ public class Game {
                 }
             }
         }
-        return 1;
+        return 0;
     }
 
     //place ship
-    public void placeShip(int x, int y, boolean rotation, char type, char[][] field){
+    public void placeShip(int x, int y, boolean rotation, int type, char[][] field){
         int startPosX; int startPosY; int endPosX; int endPosY;
+        int[] tempShipsRemaining = player.getShipsRemaining();
         if(checkPlacement(x, y, rotation, type, field) == -1) {
             System.out.println("info: no ship was placed");
         }
@@ -109,15 +98,37 @@ public class Game {
                     field[currentPosY][currentPosX] = 's';
                 }
             }
+            tempShipsRemaining[type] --;
+            player.setShipsRemaining(tempShipsRemaining);
         }
     }
 
-    private int getLengthFromType(char type) {
+    //checks if all ships of one player have been hit
+    public boolean checkGameOver(char[][] field) {
+        int tempShips = 0;
+        for(int i = 0; i < field.length; i++) {
+            for(int j = 0; j < field[0].length; j++) {
+                if(field[i][j] == 's') {
+                    tempShips ++;
+                }
+            }
+            System.out.println();
+        }
+        if (tempShips != 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    private int getLengthFromType(int type) {
+        int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
         switch (type) {
-            case 'a': return lengthOfShipList[0];
-            case 'b': return lengthOfShipList[1];
-            case 'c': return lengthOfShipList[2];
-            case 'd': return lengthOfShipList[3];
+            case 0: return lengthOfShipList[0];
+            case 1: return lengthOfShipList[1];
+            case 2: return lengthOfShipList[2];
+            case 3: return lengthOfShipList[3];
         }
         System.out.println("error: could not get length of ship from type");
         return -1;
@@ -137,10 +148,10 @@ public class Game {
             }
         }
     }
+
     public static void main(String[] args) {
 
         Game game1 = new Game();
-
         game1.playRound();
 
     }

@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class Player {
@@ -38,6 +39,9 @@ public class Player {
         this.shipsRemaining = shipsRemaining;
     }
     public int shipsRemaining() {
-        return IntStream.of(shipsRemaining).sum();
+        int value = IntStream.of(shipsRemaining).sum();
+        System.out.println("info: player has " + value + " ships remaining");
+        return value;
+        
     }
 }
