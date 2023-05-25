@@ -4,11 +4,11 @@ public class Game {
     Player player;
     ComputerEnemy computerplayer;
     Gui gui = new Gui();
-
-    //variables
-    
     
     public Game() {
+
+        player = new Player("player1");
+        computerplayer = new ComputerEnemy();
 
     }
 
@@ -17,7 +17,8 @@ public class Game {
         boolean gameOver = false;
         
         while(player.shipsRemaining() != 0) {
-            placeShip(1,1,false,0, player.getOwnField());
+            placeShip(1,1,true,3, player.getOwnField());
+            placeShip(1,3,false,2, player.getOwnField());
             printField(player.getOwnField());
             try {
                 Thread.sleep(10000);
@@ -83,22 +84,28 @@ public class Game {
     public void placeShip(int x, int y, boolean rotation, int type, char[][] field){
         int startPosX; int startPosY; int endPosX; int endPosY;
         int[] tempShipsRemaining = player.getShipsRemaining();
-        if(checkPlacement(x, y, rotation, type, field) == -1) {
-            System.out.println("info: no ship was placed");
-        }
-        else {
-            if(rotation == true) {startPosX = x; startPosY = y; endPosX = startPosX + getLengthFromType(type) - 1; endPosY = y;}
-            else {startPosX = x; startPosY = y; endPosX = x; endPosY = startPosY + getLengthFromType(type) - 1;}
-            System.out.println("debug: placing from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
 
-            for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
-                for (int currentPosX = startPosX; currentPosX <= endPosX; currentPosX ++) {
-                    field[currentPosY][currentPosX] = 's';
-                }
+        if (player.shipsRemaining() != 0) {
+            if(checkPlacement(x, y, rotation, type, field) == -1) {
+                System.out.println("info: no ship was placed");
+                return;
             }
-            tempShipsRemaining[type] --;
-            player.setShipsRemaining(tempShipsRemaining);
+            else {
+                if(rotation == true) {startPosX = x; startPosY = y; endPosX = startPosX + getLengthFromType(type) - 1; endPosY = y;}
+                else {startPosX = x; startPosY = y; endPosX = x; endPosY = startPosY + getLengthFromType(type) - 1;}
+                System.out.println("debug: placing from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
+
+                for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
+                    for (int currentPosX = startPosX; currentPosX <= endPosX; currentPosX ++) {
+                        field[currentPosY][currentPosX] = 's';
+                    }
+                }
+                tempShipsRemaining[type] --;
+                player.setShipsRemaining(tempShipsRemaining);
+                return;
+            }
         }
+        System.out.println("info: no ships remaining");
     }
 
     //checks if all ships of one player have been hit

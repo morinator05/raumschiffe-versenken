@@ -2,7 +2,7 @@ public class ComputerEnemy extends Player {
 
     ComputerEnemy() {
 
-        super("horst");
+        super("jannick");
 
     }
 
