@@ -9,9 +9,7 @@ public class Game {
     
     
     public Game() {
-        gui = new Gui();
-        player = new Player("null");
-        computerplayer = new  ComputerEnemy();
+
     }
 
     //plays one round and returns the winner
