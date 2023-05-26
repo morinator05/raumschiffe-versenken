@@ -4,6 +4,9 @@ public class Game {
     Player player;
     ComputerEnemy computerplayer;
     Gui gui = new Gui();
+
+    //Variables
+    int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
     
     public Game() {
 
@@ -47,7 +50,7 @@ public class Game {
     //check if entered ship placement is valid and does not touch a other ship 
     private int checkPlacement(int x, int y, boolean rotation, int type, char[][] field) {
         //convert ship type to length
-        int lengthOfShip = getLengthFromType(type);
+        int lengthOfShip = lengthOfShipList[type];
 
         //set start and end coords and checks if ship would be out of bounds
         int startPosX = x - 1; int startPosY = y - 1;
@@ -91,8 +94,8 @@ public class Game {
                 return;
             }
             else {
-                if(rotation == true) {startPosX = x; startPosY = y; endPosX = startPosX + getLengthFromType(type) - 1; endPosY = y;}
-                else {startPosX = x; startPosY = y; endPosX = x; endPosY = startPosY + getLengthFromType(type) - 1;}
+                if(rotation == true) {startPosX = x; startPosY = y; endPosX = startPosX + lengthOfShipList[type] - 1; endPosY = y;}
+                else {startPosX = x; startPosY = y; endPosX = x; endPosY = startPosY + lengthOfShipList[type] - 1;}
                 System.out.println("debug: placing from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
 
                 for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
@@ -125,18 +128,6 @@ public class Game {
         else {
             return true;
         }
-    }
-
-    private int getLengthFromType(int type) {
-        int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
-        switch (type) {
-            case 0: return lengthOfShipList[0];
-            case 1: return lengthOfShipList[1];
-            case 2: return lengthOfShipList[2];
-            case 3: return lengthOfShipList[3];
-        }
-        System.out.println("error: could not get length of ship from type");
-        return -1;
     }
     
     public void attackShip(char field[][]){
