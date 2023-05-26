@@ -18,10 +18,9 @@ public class Game {
     //plays one round and returns the winner
     public int playRound() {
         boolean gameOver = false;
-        
+        //generateShipPlacements(computerplayer);
+        generateShipPlacements(player);
         while(player.shipsRemaining() != 0) {
-            placeShip(1,1,true,3, player.getOwnField());
-            placeShip(1,3,false,2, player.getOwnField());
             printField(player.getOwnField());
             try {
                 Thread.sleep(10000);
@@ -143,6 +142,28 @@ public class Game {
                 
             }
         }
+    }
+
+    // algorithm for placing ships
+    public void generateShipPlacements(Player player) {
+
+        while(player.shipsRemaining() != 0) {
+            placeShip(genRandomPos(), genRandomPos(), genRandomBoolen(), genRandomType(), player.getOwnField());
+           
+
+        }
+        printField(player.getOwnField());
+        
+        return;
+    }
+    public int genRandomPos() {
+        return (int)(Math.random() * 10);
+    }
+    public boolean genRandomBoolen() {
+        return Math.random() < 0.5;
+    }
+    public int genRandomType() {
+        return (int)(Math.random() * 4);
     }
 
     public static void main(String[] args) {
