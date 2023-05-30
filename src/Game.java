@@ -144,7 +144,7 @@ public class Game {
         int counter = 0;
         int resets = 0;
  
-        while(player.shipsRemaining() != 0) {
+        do{
             placeShip(genRandomPos(), genRandomPos(), genRandomBoolean(), genRandomType(player), player.getOwnField());
             counter ++;
             if(counter >= 200) {
@@ -152,7 +152,7 @@ public class Game {
                 player.setAllWater(player.getOwnField());
                 player.resetShipsRemaining();
             }
-        }  
+        } while(player.shipsRemaining() != 0);  
         System.out.println("tries to place all ships: " + counter + " times reset: " + resets);
     }
 
