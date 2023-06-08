@@ -1,5 +1,3 @@
-
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class Player {
@@ -9,6 +7,7 @@ public class Player {
     private char[][] ownField = new char[10][10];
     private char[][] enemyField = new char[10][10];
     private int[] shipsRemaining = {4, 3, 2, 1}; // small, small_medium, large_medium, large
+    private int[] shipsRemainingDefault = {4, 3, 2, 1};
 
     //constructor
     Player(String initName) {
@@ -17,12 +16,15 @@ public class Player {
         setAllWater(enemyField);
     }
 
-    private void setAllWater(char[][] field) {
+    public void setAllWater(char[][] field) {
         for(int row = 0; row < field.length; row++) {
             for(int column = 0; column < field[0].length; column++) {
-                field[row][column] = 'w';
+                field[row][column] = '~';
             }
         }
+    }
+    public void resetShipsRemaining() {
+        shipsRemaining = shipsRemainingDefault;
     }
 
     public char[][] getOwnField() {
@@ -43,5 +45,24 @@ public class Player {
         System.out.println("info: player has " + value + " ships remaining");
         return value;
         
+    }
+
+    public int genRandomType(Player player) {
+        int[] shipsRemaining = player.getShipsRemaining();
+        
+        if(shipsRemaining[3] != 0){
+            return 3;
+        }
+        if(shipsRemaining[2] != 0){
+            return 2;
+        }
+        if(shipsRemaining[1] != 0){
+            return 1;
+        }
+        if(shipsRemaining[0] != 0){
+            return 0;
+        }
+
+        return -1;
     }
 }
