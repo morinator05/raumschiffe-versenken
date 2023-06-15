@@ -1,5 +1,10 @@
 public class TerminalOut {
-    
+
+    //options
+    private String lang = "en";//de-> german, en-> english, fr-> french
+    private char shipSymbol = 's';//char for ship (*, #, +)
+    private char waterSymbol = '~';//w ater terxure
+    private char hitShip = 'x'; //char if a ship was hit (x, )
 
     public TerminalOut() {}
 
@@ -8,13 +13,18 @@ public class TerminalOut {
         
     }
 
-    //print own and enemy(the one you see) field
-    public void printField(char[][] field0, char[][] field1) {
-        
+    //interface for placing the ships
+    public void playerInputPlace() {
+
     }
 
-    //get player input for placing ship
-    public void playerInputPlaceShip() {
+    //interface while in game
+    public void playerInputAttack() {
+
+    }
+
+    //options menu interfaces
+    public void options() {
 
     }
 
