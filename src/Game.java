@@ -17,7 +17,11 @@ public class Game {
     //plays one round and returns the winner
     public void playRound() {
 
-        generateShipPlacements(player);
+        placeShip(1,1,true, 0, player.getOwnField());
+        printField(player.getOwnField());
+        attackPos(1,1,player.getOwnField());
+        System.out.println(checkGameOver(player));
+        attackPos(2,1,player.getOwnField());
         printField(player.getOwnField());
 
     }
@@ -60,7 +64,7 @@ public class Game {
         //check from startPosXY to endPosXY if ship would touch other ship 
         for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
             for (int currentPosX = startPosX; currentPosX <= endPosX; currentPosX ++) {
-                if(field[currentPosY][currentPosX] != '~') {
+                if(field[currentPosY][currentPosX] != 'w') {
                     System.out.println("error: invalid ship placement");
                     return -1;
                 }
@@ -83,7 +87,7 @@ public class Game {
 
             else {
                 startPosX = x; startPosY = y; 
-                if(rotation == true) {
+                if(rotation) {
                     endPosX = startPosX + lengthOfShipList[type] - 1; endPosY = y;
                 }
                 else {
@@ -93,7 +97,7 @@ public class Game {
 
                 for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
                     for (int currentPosX = startPosX; currentPosX <= endPosX; currentPosX ++) {
-                        field[currentPosY][currentPosX] = '#';
+                        field[currentPosY][currentPosX] = 's';
                     }
                 }
                 tempShipsRemaining[type] --;
@@ -106,36 +110,25 @@ public class Game {
     }
 
     //checks if all ships of one player have been hit
-    public boolean checkGameOver(char[][] field) {
+    public boolean checkGameOver(Player player) {
         int tempShips = 0;
-        for(int i = 0; i < field.length; i++) {
-            for(int j = 0; j < field[0].length; j++) {
-                if(field[i][j] == 's') {
+        for(int i = 0; i < player.getOwnField().length; i++) {
+            for(int j = 0; j < player.getOwnField().length; j++) {
+                if(player.getOwnField()[i][j] == 's') {
                     tempShips ++;
                 }
             }
             System.out.println();
         }
-        if (tempShips != 0) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return tempShips == 0;
     }
     
-    public void attackShip(char field[][]){
-        for(int i = 0; i < field.length; i++) {
-            for(int j = 0; j < field[0].length; j++) {
-                char[][] shot = new char[i][j];
-                if(shot[i][j] == 's' || shot[i][j] == 'h'){
-                    field[i][j] = 'h'; // h = hit
-                }
-                else if(shot[i][j] == 'w' || shot[i][j] == 'm'){
-                    field[i][j] = 'm'; // m = miss
-                }
-                
-            }
+    public void attackPos(int PosX, int PosY, char field[][]){
+        if (field[PosY][PosX] == 'w') {
+            field[PosY][PosX] = 'm';
+        }
+        else {
+            field[PosY][PosX] = 'h';
         }
     }
 
