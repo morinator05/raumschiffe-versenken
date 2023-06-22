@@ -3,6 +3,7 @@ public class Game {
     //associations
     Player player;
     ComputerEnemy computerplayer;
+    TerminalOut terminalout = new TerminalOut();
 
     //Variables
     int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
@@ -18,11 +19,7 @@ public class Game {
     public void playRound() {
 
         placeShip(1,1,true, 0, player.getOwnField());
-        printField(player.getOwnField());
-        attackPos(1,1,player.getOwnField());
-        System.out.println(checkGameOver(player));
-        attackPos(2,1,player.getOwnField());
-        printField(player.getOwnField());
+        terminalout.playerInputPlace(player.getOwnField());
 
     }
 

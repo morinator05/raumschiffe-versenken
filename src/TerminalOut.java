@@ -1,10 +1,17 @@
+import java.util.Scanner;
+
 public class TerminalOut {
 
     //options
-    private String lang = "en";//de-> german, en-> english, fr-> french
-    private char shipSymbol = 's';//char for ship (*, #, +)
+    private int lang = 1;//1-> german, 0-> english, 2-> french
+    private char shipSymbol = '#';//char for ship (*, #, +)
     private char waterSymbol = '~';//w ater texture
-    private char hitShip = 'x'; //char if a ship was hit (x, )
+    private char hitSymbol = 'x'; //char if a ship was hit (x, )
+    private char missSymbol = 'O';//miss
+    private String[][] terminalMessages = { {"check" },
+                                            {"test"},
+                                            {"kekW"},
+    };
 
     public TerminalOut() {}
 
@@ -41,17 +48,19 @@ public class TerminalOut {
         }
     }
 
-    //interface for placing the ships
-    public void playerInputPlace() {
-        char[][] ownField = new char[10][10];
-        System.out.println("  0 1 2 3 4 5 6 7 8 9");
-        for(int i = 0; i < ownField.length; i++) {
-            for(int j = 0; j < ownField[0].length; j++) {
-                System.out.print(i+ " "+ ownField[i][j] + "  ");
-            }
-            System.out.println();
-        }
-        
+    //interface for placing the ships //int[0] = x; int [1] = y
+    public int[] playerInputPlace(char[][] ownField) {
+        Scanner scan = new Scanner(System.in);
+        int[] coords = new int[2];
+
+        printFieldWithNumbers(ownField);
+
+        System.out.println(terminalMessages[lang][0]);
+        coords[0] = scan.nextInt();
+        System.out.println(terminalMessages[lang][0]);
+        coords[1] = scan.nextInt();
+
+        return coords;
     }
 
     //interface while in game
@@ -62,6 +71,33 @@ public class TerminalOut {
     //options menu interfaces
     public void options() {
 
+    }
+
+    private void printFieldWithNumbers(char[][] field) {
+        System.out.println("   1 2 3 4 5 6 7 8 9 10"); //print numbers from 1 to 10 at the top
+
+        for(int i = 0; i < field.length; i++) {
+
+            //print numbers from 1 to 10 vertically for each line
+            if(i < 9) { System.out.print(i + 1 + "  "); }
+            else { System.out.print(i + 1 + " "); }
+
+            for(int j = 0; j < field[0].length; j++) {
+                if(field[i][j] == 'w') {
+                    System.out.print(waterSymbol + " ");
+                }
+                else if(field[i][j] == 's') {
+                    System.out.print(shipSymbol + " ");
+                }
+                else if(field[i][j] == 'h') {
+                    System.out.print(hitSymbol+ " ");
+                }
+                else if(field[i][j] == 'm') {
+                    System.out.print(missSymbol + " ");
+                }
+            }
+            System.out.println();
+        }
     }
 
 
