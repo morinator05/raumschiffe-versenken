@@ -5,24 +5,24 @@ public class Player {
     //variables
     String name;
     private char[][] ownField = new char[10][10];
+
     private char[][] enemyField = new char[10][10];
-    private int[] shipsRemaining = {4, 3, 2, 1}; // small, small_medium, large_medium, large
-    private int[] shipsRemainingDefault = {4, 3, 2, 1};
-    private int hits;
+    private int[] shipsRemaining; // small, small_medium, large_medium, large
+    //private int[] shipsRemainingDefault = {4, 3, 2, 1};
+    private final int[] shipsRemainingDefault = {1, 0, 0, 0};
 
     //constructor
     Player(String initName) {
         name = initName;
+        shipsRemaining = shipsRemainingDefault;
         setAllWater(ownField);
         setAllWater(enemyField);
-        hits = 0;
     }
 
-    public void resetPlayer() {
+    public void reset() {
         setAllWater(ownField);
         setAllWater(enemyField);
-        hits = 0;
-        resetShipsRemaining();
+        shipsRemaining = shipsRemainingDefault;
     }
 
 
@@ -32,6 +32,7 @@ public class Player {
     public char[][] getOwnField() {
         return ownField;
     }
+    public char[][] getEnemyField() {return enemyField;}
     public void setOwnField(char[][] ownField) {this.ownField = ownField;}
     public int[] getShipsRemaining() {
         return shipsRemaining;
@@ -41,7 +42,7 @@ public class Player {
     }
     public int shipsRemaining() {
         int value = IntStream.of(shipsRemaining).sum();
-        System.out.println("info: player has " + value + " ships remaining");
+        //System.out.println("info: player has " + value + " ships remaining");
         return value;
     }
     public void setAllWater(char[][] field) {
