@@ -18,20 +18,12 @@ public class Game {
     //plays one round and returns the winner
     public void playRound() {
 
-        placeShip(1,1,true, 0, player.getOwnField());
-        terminalout.playerInputPlace(player.getOwnField());
-
-    }
-
-
-    public void printField(char[][] field) {
-        System.out.println("debug: current field");
-        for(int i = 0; i < field.length; i++) {
-            for(int j = 0; j < field[0].length; j++) {
-                System.out.print(field[i][j] + "  ");
-            }
-            System.out.println();
+        while(player.shipsRemaining() != 0) {
+            terminalout.playerInputPlace(player.getOwnField());
+            placeShip(terminalout.inputCoordX(), terminalout.inputCoordY(), terminalout.inputRotation(), terminalout.inputType(player.getShipsRemaining()), player.getOwnField());
         }
+
+
     }
 
     //check if entered ship placement is valid and does not touch a other ship 
@@ -45,18 +37,24 @@ public class Game {
         if(rotation) {
             endPosX = startPosX + lengthOfShip + 1;
             endPosY = startPosY + 2;
-            if((startPosX + lengthOfShip > 9)) {System.out.println("error: invalid ship placement"); return -1;}
+            if((startPosX + lengthOfShip > 9)) {
+                //System.out.println("error: invalid ship placement");
+                return -1;
+            }
         }
         else{
             endPosY = startPosY + lengthOfShip + 1;
             endPosX = startPosX + 2;
-            if((startPosY + lengthOfShip > 9)) {System.out.println("error: invalid ship placement"); return -1;}
+            if((startPosY + lengthOfShip > 9)) {
+                //System.out.println("error: invalid ship placement");
+                return -1;
+            }
         }
         if(endPosX > 9) {endPosX = 9;}
         if(endPosY > 9) {endPosY = 9;}
         if(startPosX < 0) {startPosX = 0;}
         if(startPosY < 0) {startPosY = 0;}
-        System.out.println("debug: checking from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
+        //System.out.println("debug: checking from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
 
         //check from startPosXY to endPosXY if ship would touch other ship 
         for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
@@ -75,10 +73,10 @@ public class Game {
         int startPosX; int startPosY; int endPosX; int endPosY;
         int[] tempShipsRemaining = player.getShipsRemaining();
 
-        if (player.shipsRemaining() != 0) {
+        if (tempShipsRemaining[type] != 0) {
             
             if(checkPlacement(x, y, rotation, type, field) == -1) {
-                System.out.println("info: no ship was placed");
+                //System.out.println("info: no ship was placed");
                 return;
             }
 
@@ -90,7 +88,7 @@ public class Game {
                 else {
                     endPosX = x; endPosY = startPosY + lengthOfShipList[type] - 1;
                 }
-                System.out.println("debug: placing from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
+                //System.out.println("debug: placing from (" + startPosX + "|" + startPosY + ") to (" + endPosX + "|" + endPosY + ")");
 
                 for(int currentPosY = startPosY; currentPosY <= endPosY; currentPosY++) {
                     for (int currentPosX = startPosX; currentPosX <= endPosX; currentPosX ++) {
@@ -103,7 +101,7 @@ public class Game {
             }
 
         }
-        System.out.println("info: no ships remaining");
+        //System.out.println("info: no ships remaining");
     }
 
     //checks if all ships of one player have been hit
@@ -136,14 +134,13 @@ public class Game {
  
         do{
             placeShip(genRandomPos(), genRandomPos(), genRandomBoolean(), genRandomType(player), player.getOwnField());
-            counter ++;
-            if(counter >= 200) {
+            counter ++;if(counter >= 200) {
                 counter = 0; resets ++;
                 player.setAllWater(player.getOwnField());
                 player.resetShipsRemaining();
             }
         } while(player.shipsRemaining() != 0);  
-        System.out.println("tries to place all ships: " + counter + " times reset: " + resets);
+        //System.out.println("tries to place all ships: " + counter + " times reset: " + resets);
     }
 
     public int genRandomPos() {
