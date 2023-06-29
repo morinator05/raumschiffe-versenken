@@ -4,9 +4,8 @@ public class Player {
 
     //variables
     String name;
-    private char[][] ownField = new char[10][10];
-
-    private char[][] enemyField = new char[10][10];
+    private char[][] ownField = new char[10][10]; //field which the player can see and has his own ships
+    private char[][] enemyField = new char[10][10]; //enemy field where the player can see the positions he hit or missed a ship
     private int[] shipsRemaining; // small, small_medium, large_medium, large
     //private int[] shipsRemainingDefault = {4, 3, 2, 1};
     private final int[] shipsRemainingDefault = {1, 0, 0, 0};
@@ -41,10 +40,16 @@ public class Player {
         this.shipsRemaining = shipsRemaining;
     }
     public int shipsRemaining() {
-        int value = IntStream.of(shipsRemaining).sum();
-        //System.out.println("info: player has " + value + " ships remaining");
-        return value;
+        return IntStream.of(shipsRemaining).sum();
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return this.name;
+    }
+
     public void setAllWater(char[][] field) {
         for(int row = 0; row < field.length; row++) {
             for(int column = 0; column < field[0].length; column++) {
@@ -52,4 +57,5 @@ public class Player {
             }
         }
     }
+
 }
