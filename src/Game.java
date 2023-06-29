@@ -10,6 +10,7 @@ public class Game {
     
     public Game() {
         int mode;
+        int modeOptions;
         player = new Player("player1");
         computerplayer = new ComputerEnemy();
         terminalout = new TerminalOut();
@@ -17,9 +18,18 @@ public class Game {
         while(true) {
             mode = terminalout.title();
             if(mode == 1) {
-                terminalout.options();
+                do {
+                    modeOptions = terminalout.options();
+                    switch (modeOptions) {
+                        case 1:terminalout.setShipSymbol(terminalout.chooseSymbol()); break;
+                        case 2:terminalout.setWaterSymbol(terminalout.chooseSymbol()); break;
+                        case 3:terminalout.setHitSymbol(terminalout.chooseSymbol()); break;
+                        case 4:terminalout.setMissSymbol(terminalout.chooseSymbol()); break;
+                    }
+                } while(modeOptions != 0);
             }
             else if(mode == 2) {
+                
                 playRound();
             }
             player.reset();
@@ -30,6 +40,7 @@ public class Game {
 
     //plays one round and returns the winner
     public void playRound() {
+        int winner;
 
         //placing all ships
         generateShipPlacements(computerplayer);
@@ -41,13 +52,25 @@ public class Game {
 
         //attacking the ships
         terminalout.printFieldWithNumbers(computerplayer);
-        while(!checkGameOver(player) && !checkGameOver(computerplayer)) {
+        do {
+            //attacks
             terminalout.printBothFieldsWithNumbers(player);
             attackPos(terminalout.inputCoordX(), terminalout.inputCoordY(),player, computerplayer);
             attackPos(genRandomPos(), genRandomPos(), computerplayer, player);
-        }
 
+            //checks
+            if(checkGameOver(player)) {
+                winner = 2;
+            }
+            else if(checkGameOver(computerplayer)) {
+                winner = 1;
+            }
+            else {
+                winner = 0;
+            }
+        } while(winner == 0);
 
+        terminalout.win(winner);
 
     }
 
