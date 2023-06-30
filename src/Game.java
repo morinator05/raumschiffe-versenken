@@ -2,40 +2,48 @@ public class Game {
 
     //associations
     Player player;
-    ComputerEnemy computerplayer;
+    ComputerEnemy computerEnemy;
     TerminalOut terminalout;
 
     //Variables
-    int[] lengthOfShipList = {2, 3, 4, 5}; //small, small_medium, large_medium, large
+    int[] lengthOfShipList = {2, 3, 4, 5}; //list of length of ships for placing
     
     public Game() {
-        int mode;
-        int modeOptions;
+        int mode; int modeOptions;
         player = new Player("player1");
-        computerplayer = new ComputerEnemy();
+        computerEnemy = new ComputerEnemy();
         terminalout = new TerminalOut();
 
-        while(true) {
-            mode = terminalout.title();
+        do {
+
+            mode = terminalout.title(); // set mode and display title in terminal, 0 for exit
+
             if(mode == 1) {
                 do {
-                    modeOptions = terminalout.options();
+                    modeOptions = terminalout.options(); // set options mode and display Options menu in terminal, 0 for exit
+
+                    //switch between the options
                     switch (modeOptions) {
-                        case 1:terminalout.setShipSymbol(terminalout.chooseSymbol()); break;
-                        case 2:terminalout.setWaterSymbol(terminalout.chooseSymbol()); break;
-                        case 3:terminalout.setHitSymbol(terminalout.chooseSymbol()); break;
-                        case 4:terminalout.setMissSymbol(terminalout.chooseSymbol()); break;
+                        case 1:terminalout.setShipSymbol(); break;
+                        case 2:terminalout.setWaterSymbol(); break;
+                        case 3:terminalout.setHitSymbol(); break;
+                        case 4:terminalout.setMissSymbol(); break;
+                        case 5:terminalout.changeName(player);
                     }
                 } while(modeOptions != 0);
             }
             else if(mode == 2) {
-                
-                playRound();
+                playRound(); //mode two starts the round
             }
-            player.reset();
-            computerplayer.reset();
-        }
+            else if (mode == 3) {
+                terminalout.credits();
+            }
 
+            //reset players after round is played
+            player.reset();
+            computerEnemy.reset();
+
+        } while(mode != 0);
     }
 
     //plays one round and returns the winner
@@ -43,26 +51,26 @@ public class Game {
         int winner;
 
         //placing all ships
-        generateShipPlacements(computerplayer);
-        generateShipPlacements(player);
+        generateShipPlacements(computerEnemy);
+        //generateShipPlacements(player);
         while(player.shipsRemaining() != 0) {
             terminalout.printFieldWithNumbers(player);
             placeShip(terminalout.inputCoordX(), terminalout.inputCoordY(), terminalout.inputRotation(), terminalout.inputType(player), player);
         }
 
         //attacking the ships
-        terminalout.printFieldWithNumbers(computerplayer);
+        terminalout.printFieldWithNumbers(computerEnemy);
         do {
             //attacks
             terminalout.printBothFieldsWithNumbers(player);
-            attackPos(terminalout.inputCoordX(), terminalout.inputCoordY(),player, computerplayer);
-            attackPos(genRandomPos(), genRandomPos(), computerplayer, player);
+            attackPos(terminalout.inputCoordX(), terminalout.inputCoordY(),player, computerEnemy);
+            attackPos(genRandomPos(), genRandomPos(), computerEnemy, player);
 
             //checks
             if(checkGameOver(player)) {
                 winner = 2;
             }
-            else if(checkGameOver(computerplayer)) {
+            else if(checkGameOver(computerEnemy)) {
                 winner = 1;
             }
             else {
@@ -70,7 +78,7 @@ public class Game {
             }
         } while(winner == 0);
 
-        terminalout.win(winner);
+        terminalout.win(winner, player);
 
     }
 
@@ -79,7 +87,7 @@ public class Game {
         //convert ship type to length
         int lengthOfShip = lengthOfShipList[type];
 
-        //set start and end coords and checks if ship would be out of bounds
+        //set start and end cords and checks if ship would be out of bounds
         int startPosX = x - 1; int startPosY = y - 1;
         int endPosX; int endPosY;
         if(rotation) {

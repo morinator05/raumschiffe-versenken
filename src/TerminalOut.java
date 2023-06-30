@@ -26,41 +26,56 @@ public class TerminalOut {
 
     public int title() {
         clear();
-        Scanner scan = new Scanner(System.in);
 
-        System.out.println("WELCOME to Raumschiffe-Versenken");
+        System.out.println("-------------------------------------------------");
+        System.out.println("WELCOME To Raumschiffe-Versenken");
         System.out.println("To continue input one of the following numbers...");
-        System.out.println("1 -> Options menu (change the symbols)");
-        System.out.println("2 -> Start new game");
+        System.out.println("1 -> Options Menu (change the symbols and name)");
+        System.out.println("2 -> Start New Game");
+        System.out.println("3 -> Credits");
+        System.out.println("0 -> Exit");
+        System.out.println("-------------------------------------------------");
 
-        return scan.nextInt();
+        return inputNumberIntRange(0, 3);
     }
 
     //options menu interfaces
     public int options() {
         clear();
-        Scanner scan = new Scanner(System.in);
 
-        System.out.println("OPTIONS");
-        System.out.println("Choose the Symbol you want to change...");
-        System.out.println("Ship -> 1, Water -> 2, Hit -> 3, Miss -> 4");
-        System.out.println("To exit options -> 0");
+        System.out.println("-------------------------------------------------");
+        System.out.println("This Are The OPTIONS");
+        System.out.println("To continue input one of the following numbers...");
+        System.out.println("1 -> Change Ship Symbol");
+        System.out.println("2 -> Change Water Symbol");
+        System.out.println("3 -> Change Hit Symbol");
+        System.out.println("4 -> Change Miss Symbol");
+        System.out.println("5 -> Change Change Name");
+        System.out.println("0 -> Return To Main Menu");
+        System.out.println("-------------------------------------------------");
 
-        return scan.nextInt();
-    }
-    public char chooseSymbol() {
-        Scanner scan = new Scanner(System.in);
-
-        System.out.print("choose Symbol:");
-
-        return scan.next().charAt(0);
+        return inputNumberIntRange(0, 5);
     }
 
-    public void win(int winner) {
+    public void credits() {
+        clear();
+
+        System.out.println("-------------------------------------------------");
+        System.out.println("Made by Nick und Moritz");
+        System.out.println("https://github.com/morinator05/raumschiffe-versenken");
+        System.out.println();
+        System.out.println("Input '0' to get back to main menu!");
+        System.out.println("-------------------------------------------------");
+
+        inputNumberIntRange(0,0);
+
+    }
+
+    public void win(int winner, Player player) {
         clear();
         switch (winner) {
             case 1:
-                System.out.println("You Win!"); break;
+                System.out.println("You/" + player.getName() + " Won!"); break;
             case 2:
                 System.out.println("The Computer Won!"); break;
         }
@@ -140,14 +155,12 @@ public class TerminalOut {
 
     public int inputCoordX() {
         System.out.println("input x cord:");
-        Scanner scan = new Scanner(System.in);
-        return scan.nextInt() - 1;
+        return inputNumberIntRange(1, 10) - 1;
     }
 
     public int inputCoordY() {
         System.out.println("input y cord:");
-        Scanner scan = new Scanner(System.in);
-        return scan.nextInt() - 1;
+        return inputNumberIntRange(1, 10) - 1;
     }
 
     public boolean inputRotation() {
@@ -187,20 +200,20 @@ public class TerminalOut {
         }
     }
 
-    public void setShipSymbol(char shipSymbol) {
-        this.shipSymbol = shipSymbol;
+    public void setShipSymbol() {
+        this.shipSymbol = chooseSymbol();
     }
 
-    public void setWaterSymbol(char waterSymbol) {
-        this.waterSymbol = waterSymbol;
+    public void setWaterSymbol() {
+        this.waterSymbol = chooseSymbol();
     }
 
-    public void setHitSymbol(char hitSymbol) {
-        this.hitSymbol = hitSymbol;
+    public void setHitSymbol() {
+        this.hitSymbol = chooseSymbol();
     }
 
-    public void setMissSymbol(char missSymbol) {
-        this.missSymbol = missSymbol;
+    public void setMissSymbol() {
+        this.missSymbol = chooseSymbol();
     }
 
     public void clear() {
@@ -208,5 +221,25 @@ public class TerminalOut {
             System.out.println();
         }
     }
+    public char chooseSymbol() {
+        Scanner scan = new Scanner(System.in);
 
+        System.out.print("choose Symbol:");
+
+        return scan.next().charAt(0);
+    }
+    public void changeName(Player player) {
+        Scanner scan = new Scanner(System.in);
+        player.setName(scan.next());
+    }
+    public int inputNumberIntRange(int begin, int end) {
+        int temp;
+        Scanner scan = new Scanner(System.in);
+
+        //checks if the put in number is in the given range, if not repeat
+        do {
+            temp = scan.nextInt();
+        } while(temp < begin || temp > end);
+        return temp;
+    }
 }
