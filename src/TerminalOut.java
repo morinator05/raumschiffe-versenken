@@ -76,6 +76,10 @@ public class TerminalOut {
 
     }
 
+    public void alreadyHit() {
+        System.out.println("You already shot at this position, choose different:");
+    }
+
     public void win(int winner, Player player) {
         clear();
         switch (winner) {
