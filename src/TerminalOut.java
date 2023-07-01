@@ -75,14 +75,20 @@ public class TerminalOut {
         clear();
 
         System.out.println("-------------------------------------------------");
+
         System.out.println(language(lang, 19));
-        System.out.println("https://github.com/morinator05/raumschiffe-versenken");
+        System.out.println("Made by Nick und Moritz");
+
         System.out.println();
         System.out.println(language(lang, 20));
         System.out.println("-------------------------------------------------");
 
         inputNumberIntRange(0,0);
 
+    }
+
+    public void alreadyHit() {
+        System.out.println("You already shot at this position, choose different:");
     }
 
     public void win(int winner, Player player) {
