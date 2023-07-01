@@ -7,8 +7,8 @@ public class Player {
     private char[][] ownField = new char[10][10]; //field which the player can see and has his own ships
     private char[][] enemyField = new char[10][10]; //enemy field where the player can see the positions he hit or missed a ship
     private int[] shipsRemaining; // small, small_medium, large_medium, large
-    //private int[] shipsRemainingDefault = {4, 3, 2, 1};
-    private final int[] shipsRemainingDefault = {1, 0, 0, 0};
+    private int[] shipsRemainingDefault = {4, 3, 2, 1};
+    //private final int[] shipsRemainingDefault = {1, 0, 0, 0};
 
     //constructor
     Player(String initName) {

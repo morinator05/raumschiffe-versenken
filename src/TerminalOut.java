@@ -31,6 +31,7 @@ public class TerminalOut {
     }
 
     public void playerAttack(Player player) {
+        clear();
         System.out.println("-------------------------------------------------");
         System.out.println(language(lang, 2));
         printBothFieldsWithNumbers(player);
