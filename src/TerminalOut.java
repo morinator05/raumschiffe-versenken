@@ -67,7 +67,6 @@ public class TerminalOut {
 
         System.out.println("-------------------------------------------------");
         System.out.println("Made by Nick und Moritz");
-        System.out.println("https://github.com/morinator05/raumschiffe-versenken");
         System.out.println();
         System.out.println("Input '0' to get back to main menu!");
         System.out.println("-------------------------------------------------");
