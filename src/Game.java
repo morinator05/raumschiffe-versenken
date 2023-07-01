@@ -28,7 +28,8 @@ public class Game {
                         case 2:terminalout.setWaterSymbol(); break;
                         case 3:terminalout.setHitSymbol(); break;
                         case 4:terminalout.setMissSymbol(); break;
-                        case 5:terminalout.changeName(player);
+                        case 5:terminalout.changeName(player); break;
+                        case 6:terminalout.changeLang(player);
                     }
                 } while(modeOptions != 0);
             }
