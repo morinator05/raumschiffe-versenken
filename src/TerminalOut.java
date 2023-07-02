@@ -4,18 +4,19 @@ public class TerminalOut {
 
 
     //options
-    private char shipSymbol = '#';//char for ship (*, #, +)
+    private char shipSymbol = '#'; //char for ship (*, #, +)
     private char waterSymbol = '~';//w ater texture
-    private char hitSymbol = 'x'; //char if a ship was hit (x)
-    private char missSymbol = 'O';//miss
-    private int lang = 0;
+    private char hitSymbol = 'x';  //char if a ship was hit (x)
+    private char missSymbol = 'O'; //miss
+    private int lang = 0;          //int for language selection
 
     public TerminalOut() {
     }
 
+    //selcetion of sentences that get print on terminal
     public String language(int lang, int temp){
-        String[][] language = {{"Your Field:", "Input your Ship!",              "   Enemy Field:               Your Field:", "Input Coordinates!",    "WELCOME To Raumschiffe-Versenken",  "To continue input one of the following numbers...",           "1 -> Options Menu (change the symbols, name and language)",             "2 -> Start New Game",         "3 -> Credits", "0 -> Exit",          "This Are The OPTIONS",   "To continue input one of the following numbers...",           "1 -> Change Ship Symbol, current: ",        "2 -> Change Water Symbol, current: ",       "3 -> Change Hit Symbol, current: ",            "4 -> Change Miss Symbol, current: ",          "5 -> Change Name, current: ",          "6 -> Change Language, current: ",      "0 -> Return To Main Menu",        "Made by Nick und Moritz",     "Input '0' to get back to main menu!",                    "The Computer Won!",          "input X cord:",          "input Y cord:",          "Input rotation (1-> horizontal, 2-> vertical):",    "Bad input, try again:",                  "Ships left: small: ",        "medium: ", "big: ",  "huge: ",       "input type:",   "No ships of that type left, choose different:",             "Choose symbol:",         "Choose new name:",         "Choose Language (0-> English, 1-> German): ",         "Bad Input, try again! "},
-                               {"Dein Feld:",  "Geben Sie ihre Schiffe an!",    "   Gegner Feld:               Dein Feld:" , "Koordinaten eingeben!", "WILKOMMEN zu Raumschiffe-Versenken","Um fortzufahren geben sie eine der folgenden Nummern ein...", "1 -> Optionen Menu (ändere die Symbole, deinen Namen und die Sprache)", "2 -> Starte ein neues Spiel", "3 -> Credits", "0 -> Spiel Beenden", "Das sind die OPTIONEN ", "Um fortzufahren geben sie eine der folgenden Nummern ein...", "1 -> Ändere das Schiff Symbol, jetziges: ", "2 -> Ändere das Wasser Symbol, jetziges: ", "3 -> Ändere das Getroffen Symbol, jetziges: ", "4 -> Ändere das Vertroffen Symbol, jetziges: ", "6 -> Ändere deinen Namen, jetziger: ", "6 -> Ändere die Sprache, jetzige: ", "0 -> Zum Hauptmenü zurückkehren", "Gemacht von Nick und Moritz", "Geben Sie '0' ein, um in das Hauptmenü zurückzukehren!", "Der Computer hat gewonnen!", "X Koordinate eingeben:", "Y Koordinate eingeben:", "Rotation eingeben (1-> Horizontal, 2-> Vertikal):", "Schlechte Eingabe, versuche es erneut:", "Schiffe verbleibend: Klein", "Mittel: ", "Groß: ", "Gigantisch: ", "Typ eingeben:", "Keine Schiffe dieses Typs verbleibend, wähle eine andere:", "Wähle das Symbol aus.:", "Wähle einen neuen Namen:", "Wähle die Sprache aus (0-> Englisch, 1-> Deutsch): ", "Schlechte Eingabe, versuche es erneut!"},
+        String[][] language = {{"Your Field:", "Input your Ship!",              "   Enemy Field:               Your Field:", "Input Coordinates!",    "WELCOME To Raumschiffe-Versenken",  "To continue input one of the following numbers...",           "1 -> Options Menu (change the symbols, name and language)",             "2 -> Start New Game",         "3 -> Credits", "0 -> Exit",          "This Are The OPTIONS",   "To continue input one of the following numbers...",           "1 -> Change Ship Symbol, current: ",        "2 -> Change Water Symbol, current: ",       "3 -> Change Hit Symbol, current: ",            "4 -> Change Miss Symbol, current: ",          "5 -> Change Name, current: ",          "6 -> Change Language, current: ",      "0 -> Return To Main Menu",        "Made by Nick und Moritz",     "Input '0' to get back to main menu!",                    "The Computer Won!",          "input X cord:",          "input Y cord:",          "Input rotation (1-> horizontal, 2-> vertical):",    "Bad input, try again:",                  "Ships left: small: ",        "medium: ", "big: ",  "huge: ",       "input type:",   "No ships of that type left, choose different:",             "Choose symbol:",         "Choose new name:",         "Choose Language (0-> English, 1-> German): ",         "Bad Input, try again! ",                 "You already shot at this position, choose different:"},
+                               {"Dein Feld:",  "Geben Sie ihre Schiffe an!",    "   Gegner Feld:               Dein Feld:" , "Koordinaten eingeben!", "WILKOMMEN zu Raumschiffe-Versenken","Um fortzufahren geben sie eine der folgenden Nummern ein...", "1 -> Optionen Menu (ändere die Symbole, deinen Namen und die Sprache)", "2 -> Starte ein neues Spiel", "3 -> Credits", "0 -> Spiel Beenden", "Das sind die OPTIONEN ", "Um fortzufahren geben sie eine der folgenden Nummern ein...", "1 -> Ändere das Schiff Symbol, jetziges: ", "2 -> Ändere das Wasser Symbol, jetziges: ", "3 -> Ändere das Getroffen Symbol, jetziges: ", "4 -> Ändere das Vertroffen Symbol, jetziges: ", "6 -> Ändere deinen Namen, jetziger: ", "6 -> Ändere die Sprache, jetzige: ", "0 -> Zum Hauptmenü zurückkehren", "Gemacht von Nick und Moritz", "Geben Sie '0' ein, um in das Hauptmenü zurückzukehren!", "Der Computer hat gewonnen!", "X Koordinate eingeben:", "Y Koordinate eingeben:", "Rotation eingeben (1-> Horizontal, 2-> Vertikal):", "Schlechte Eingabe, versuche es erneut:", "Schiffe verbleibend: Klein", "Mittel: ", "Groß: ", "Gigantisch: ", "Typ eingeben:", "Keine Schiffe dieses Typs verbleibend, wähle eine andere:", "Wähle das Symbol aus.:", "Wähle einen neuen Namen:", "Wähle die Sprache aus (0-> Englisch, 1-> Deutsch): ", "Schlechte Eingabe, versuche es erneut!", "Du hast bereits dieses Feld beschossen, versuche eine anderes:"},
                                {}};
         
         return language[lang][temp];
@@ -78,7 +79,7 @@ public class TerminalOut {
         System.out.println("-------------------------------------------------");
 
         System.out.println(language(lang, 19));
-        System.out.println("Made by Nick und Moritz");
+        //System.out.println("Made by Nick und Moritz");
 
         System.out.println();
         System.out.println(language(lang, 20));
@@ -89,7 +90,7 @@ public class TerminalOut {
     }
 
     public void alreadyHit() {
-        System.out.println("You already shot at this position, choose different:");
+        System.out.println(language(lang, 36));
     }
 
     public void win(int winner, Player player) {
@@ -104,13 +105,17 @@ public class TerminalOut {
                 System.out.println("  //    //        //	//     //    	    //   //         //   //     //       //   //    // //       ");
                 System.out.println("  //	 /////////	  ////  	     ////            ////        ////////    //      ///        //");
                 System.out.println("----------------------------------------------------------------------------------------------------------");
+                //System.out.println("You/" + player.getName() + " Won!");
                 System.out.println(player.getName());
                 for(int i =0; i<06; i++){
                     System.out.println(" ");
                 } break;
-                //System.out.println("You/" + player.getName() + " Won!");
+                
             case 2:
-                System.out.println(language(lang, 21)); break;
+                System.out.println(language(lang, 21)); 
+                for(int i =0; i<06; i++){
+                    System.out.println(" ");
+                } break;
         }
     }
 
@@ -261,6 +266,8 @@ public class TerminalOut {
         System.out.print(language(lang, 33));
         player.setName(scan.next());
     }
+
+    //set new language
     public int changeLang(Player player) {
         Scanner scan = new Scanner(System.in);
         System.out.println(language(lang, 34));
