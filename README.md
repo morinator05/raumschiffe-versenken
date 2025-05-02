@@ -1,6 +1,7 @@
 # Project Title
 
 This is a little minigame for a school-project
+Please dond judge we didnt know what we were doing hahaha
 
 
 ## Authors
