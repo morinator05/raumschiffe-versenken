@@ -2,9 +2,6 @@
 
 This is a little minigame for a school-project
 
-==> please dont look at the code, i didnt know what i was doing :/
-
-
 ## Authors
 
 - [@morinator05](https://www.github.com/morinator05)
